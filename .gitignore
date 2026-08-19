@@ -1,0 +1,7 @@
+node_modules/
+dist/
+data/raw/
+data/listings.jsonl
+data/state.json
+.env
+*.log
