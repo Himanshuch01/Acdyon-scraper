@@ -15,7 +15,8 @@ import express from "express";
 import { generateJobs, TOTAL_PAGES, SandboxJob } from "./jobs";
 
 const app = express();
-const PORT = Number(process.env.SANDBOX_PORT ?? 4040);
+const PORT = Number(process.env.PORT ?? process.env.SANDBOX_PORT ?? 4040);
+const BASE_URL = process.env.BASE_URL ?? `http://localhost:${PORT}`;
 
 function renderJobsPageV1(jobs: SandboxJob[], page: number): string {
   const items = jobs
@@ -42,7 +43,7 @@ function renderJobsPageV1(jobs: SandboxJob[], page: number): string {
         hiringOrganization: j.company,
         jobLocation: j.location,
         datePosted: j.postedAt,
-        url: `http://localhost:${PORT}/jobs/${j.id}`,
+        url: `${BASE_URL}/jobs/${j.id}`,
       },
     })),
   };
@@ -133,7 +134,7 @@ app.get("/feed.xml", (_req, res) => {
     .map(
       (j) => `<item><guid>${j.id}</guid><title>${j.title}</title><author>${j.company}</author>
       <category>${j.location}</category><pubDate>${new Date(j.postedAt).toUTCString()}</pubDate>
-      <link>http://localhost:${PORT}/jobs/${j.id}</link></item>`
+      <link>${BASE_URL}/jobs/${j.id}</link></item>`
     )
     .join("\n");
   res.type("application/rss+xml").send(

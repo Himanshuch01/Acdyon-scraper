@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: acdyon-scraper-sandbox
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: BASE_URL
+        sync: false   # Render will auto-set this to your service URL
+    healthCheckPath: /jobs?page=1

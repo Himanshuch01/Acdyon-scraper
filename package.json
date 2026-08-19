@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
+    "start": "node dist/sandbox/server.js",
     "sandbox": "npm run build && node dist/sandbox/server.js",
     "scrape": "npm run build && node dist/index.js"
   },
